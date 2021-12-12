@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <title>LITDWAY DAO</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script
+      onload="LitJsSdk.litJsSdkLoadedInALIT()"
+      src="https://jscdn.litgateway.com/index.web.js"
+    ></script>
+    <link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script>
+    <script>
+
+      /*
+      async function mintNft() {
+        document.getElementById("mintingStatus").innerText =
+          "Minting, please wait for the tx to confirm...";
+
+        window.chain = document.getElementById("selectedChain").value;
+
+        const { txHash, tokenId, tokenAddress, mintingAddress, authSig } =
+          await LitJsSdk.mintLIT({ chain: window.chain, quantity: 1 });
+        window.tokenId = tokenId;
+        window.tokenAddress = tokenAddress;
+        window.authSig = authSig;
+
+        document.getElementById("mintingStatus").innerText =
+          "Minted!  Tx hash is " + txHash;
+      }
+
+*/
+
+
+      async function provisionAccess() {
+        const contractAddress = '0x88B48F654c30e99bc2e4A1559b4Dcf1aD93FA656';
+window.tokenId = '25183451298761956721174036191738219098442504824138882936155247639619145039873';
+window.chain = "rinkeby";
+        
+        document.getElementById("provisioningStatus").innerText =
+          "Granting access, please wait...";
+        window.accessControlConditions = [
+          {
+            contractAddress: contractAddress,
+            standardContractType: "ERC1155",
+            chain: "rinkeby",
+            method: "balanceOf",
+            parameters: [":userAddress", window.tokenId],
+            returnValueTest: {
+              comparator: ">",
+              value: "0",
+            },
+          },
+        ];
+        // generate a random path because you can only provision access to a given path once
+        const randomUrlPath =
+          "/" +
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15);
+        window.resourceId = {
+          baseUrl: "my-dynamic-content-server.com",
+          path: randomUrlPath, // this would normally be your url path, like "/webpage.html" for example
+          orgId: "",
+          role: "",
+          extraData: "",
+        };
+        window.authSig = await LitJsSdk.checkAndSignAuthMessage({chain: 'rinkeby'})
+        await litNodeClient.saveSigningCondition({
+          accessControlConditions: window.accessControlConditions,
+          chain: window.chain,
+          authSig: window.authSig,
+          resourceId: window.resourceId,
+        });
+        document.getElementById("logout").innerText =
+          "";
+      
+        document.getElementById("provisioningStatus").innerText =
+          "Access granted!! you can now request your JWT";
+      }
+
+      async function requestJwt() {
+        try{
+        document.getElementById("requestingStatus").innerText =
+          "Requesting JWT, please wait...";
+         
+        window.jwt = await litNodeClient.getSignedToken({
+          accessControlConditions: window.accessControlConditions,
+          chain: window.chain,
+          authSig: window.authSig,
+          resourceId: window.resourceId,
+        });
+
+        document.getElementById("requestingStatus").innerText =
+          "JWT Obtained!  It is  " + window.jwt;
+          document.getElementById("jokeResponse").innerText =
+          'We could have just sent a message like "Password confirmed!!!" but dont you want to see your access token ?';
+      } catch(err)
+      {
+        document.getElementById("requestingStatus").innerText =
+          "Sorry could not generate a password for you cause you are not on the list!! clear entry and try again";
+      }
+      }
+
+      async function visitProtectedServer() {
+        document.getElementById("verificationStatus").innerText =
+          "Redirecting to LITDWAY DAO content, please wait...!!";
+        window.location = "/?jwt=" + window.jwt;
+      }
+      async function Logout(){
+        LitJsSdk.disconnectWeb3();
+        document.getElementById("provisioningStatus").innerText =
+          " ";
+          document.getElementById("requestingStatus").innerText =
+          " ";
+          document.getElementById("jokeResponse").innerText =
+          '';
+      
+          window.jwt = undefined;
+        document.getElementById("logout").innerText =
+          "Cleared Entry, you can authenticate !!!";
+      }
+    </script>
+    <style>
+     * {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "kumbh Sans", sans-serif;
+}
+div{
+  color: #ffd429;
+}
+h2{
+  color: #f22d2e;
+}
+h1{
+  color: #f22d2e;
+}
+.wrapper{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50% , -50%) 
+}
+button{
+  color: #f22d2e;
+}
+div.scrollable{
+  margin: 4px, 4px;
+        padding: 4px;
+        
+        width: 400px;
+        overflow-x: auto;
+        overflow-y: auto;
+        white-space: nowrap;
+}
+
+    </style>
+  </head> 
+
+  <body>
+    <div class="wrapper">
+    <h1><u>LITDWAY Authentication system</u></h1>
+
+  <!-- <h2>Step 1: Mint an NFT</h2>
+    Chain to mint on:
+    <select id="selectedChain">
+    
+      <option value="rinkeby" selected>Rinkeby</option>
+      
+    </select>
+    <br />
+    <br />
+    <button onclick="mintNft()">Mint NFT</button>
+    <br />
+    <br />
+    <div id="mintingStatus"></div> -->
+
+    <h2>Allow access to your web wallet</h2>
+  
+    <button onclick="provisionAccess()" class="mui-btn mui-btn--raised mui-btn--primary">
+      Allow access</button>
+    <br />
+    <br />
+    <div id="provisioningStatus"></div>
+
+    <h2>Request a password as a JWT </h2>
+    
+    <button class="mui-btn mui-btn--raised mui-btn--primary" onclick="requestJwt()" >
+      Request JWT
+    </button>
+    <br />
+    <br />
+    <div class="scrollable">
+    <div id="requestingStatus"></div>
+    <div id="jokeResponse"></div>
+  </div>
+    <h2>
+     You can now access LITDWAY DAO content
+    </h2>
+    
+    <button class="mui-btn mui-btn--raised mui-btn--primary" onclick="visitProtectedServer()" >
+      Access LITDWAY DAO
+    </button>
+    <br />
+    <br />
+    <pre id="verificationStatus"></pre>
+  
+    <br />
+    <h2>
+      Any step failed or missing click this button before retrying 
+    </h2>
+    <button class="mui-btn mui-btn--raised mui-btn--primary" onclick="Logout()">Clear entry</button>
+    <br/>
+    <br/>
+    <div id="logout"></div>
+  </div>
+  </body>
+</html>
