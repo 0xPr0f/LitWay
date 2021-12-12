@@ -21,7 +21,7 @@ To run the code, in the folder where ther is a package.json you will use `yarn` 
 Project Name: LITWAY
 Video Walkthrough: https://youtu.be/l3IBIMmRTSc  
 Contact Info: https://discord.gg/g8F9uuGj (join my discord for questions)   
-LITDWAY DAO NFT: https://testnets.opensea.io/assets/0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656/25183451298761956721174036191738219098442504824138882936155247639619145039873  
+LITDWAY DAO NFT: Contact me to get the NFT link 
 
 
  
