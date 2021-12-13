@@ -34,7 +34,10 @@
         const contractAddress = '0x88B48F654c30e99bc2e4A1559b4Dcf1aD93FA656';
 window.tokenId = '25183451298761956721174036191738219098442504824138882936155247639619145039873';
 window.chain = "rinkeby";
-        
+        if(window.ethereum)
+{
+  await ethereum.request({ method: "eth_requestAccounts" })
+}
         document.getElementById("provisioningStatus").innerText =
           "Granting access, please wait...";
         window.accessControlConditions = [
