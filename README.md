@@ -13,8 +13,10 @@ And there is a reset button to clear your previous entries and begin a new one.
     
 # How it was built  
 LITWAY was built using the lit-protocol-js-sdk that enables users to easily token gate any content of their choice with simple javascript.  
-The authentication code is in the example.html, while the server code is in the server.js, the locked app(react build) is in client\MainWork which will show the build and the app codes.  
+The authentication code is in the Auth.html, while the server code is in the server.js, the locked app(react build) is in client\MainWork which will show the build and the app codes.  
 To run the code, in the folder where ther is a package.json you will use `yarn` to install the dependencies and then you can start up the app at localhost, but you will need the nft purchased to access the site, so you can head to my discord and you will be provided the assistance need.  
+  
+Any one can put a build in the client folder and direct it in the server
 # Use case
 This authentication system has different use case.  
 Use case 1: This authentication can be used to secure DApp to be accessed by specific nft/collection holders which can be a DAO.  
@@ -30,7 +32,7 @@ Contact Info: https://discord.gg/g8F9uuGj (join my discord for questions)
 LITDWAY DAO NFT: Contact me to get the NFT link 
 
 # Extras
-Elaborate video walkthrough:
+Elaborate video walkthrough: https://youtu.be/p0-U6S8jCRI
 
  
 
